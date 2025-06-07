@@ -1,28 +1,40 @@
-version: "3.8"
+version: '3.8'
 
 services:
-  postgres:
+  db:
     image: postgres:16
+    container_name: expense-db
     environment:
       POSTGRES_DB: expenses_db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 0000
     ports:
       - "5432:5432"
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "appuser"]
+      interval: 5s
+      retries: 5
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
   app:
     build: .
+    container_name: expense-tracker-app
     depends_on:
-      - postgres
-    ports:
-      - "8080:8080"
+      db:
+        condition: service_healthy
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/expensetracker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/expenses_db
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: 0000
-    restart: always
+    ports:
+      - "8080:8080"
+    networks:
+      - backend
+    restart: unless-stopped
 
-volumes:
-  postgres_data:
+networks:
+  backend:
+    driver: bridge
