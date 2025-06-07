@@ -62,10 +62,6 @@ public class ExpenseService {
         return map;
     }
 
-    public List<Expense> getExpensesByMonth(int year, int month) {
-        return expenseRepository.findByYearAndMonth(year, month);
-    }
-
     public List<Expense> getExpensesByMonthForUser(User user, int year, int month) {
         LocalDate start = LocalDate.of(year, month, 1);
         LocalDate end = start.withDayOfMonth(start.lengthOfMonth());
