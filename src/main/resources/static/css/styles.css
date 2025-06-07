@@ -1,0 +1,13 @@
+/* В тёмной теме — светлая кнопка */
+[data-theme='dark'] .menu-toggle-btn {
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid #cccccc;
+}
+
+/* В светлой теме — тёмная кнопка */
+[data-theme='light'] .menu-toggle-btn {
+    background-color: #343a40;
+    color: #ffffff;
+    border: 1px solid #000000;
+}
