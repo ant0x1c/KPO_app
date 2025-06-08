@@ -22,6 +22,6 @@ public class LoginController {
             return "redirect:/login";
         }
 
-        return "/login";
+        return "login";
     }
 }
