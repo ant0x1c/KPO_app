@@ -13,7 +13,7 @@ services:
     networks:
       - backend
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "appuser"]
+      test: ["CMD", "pg_isready", "-U", "postgres"]
       interval: 5s
       retries: 5
     volumes:
@@ -38,3 +38,6 @@ services:
 networks:
   backend:
     driver: bridge
+
+volumes:
+  postgres_data:
